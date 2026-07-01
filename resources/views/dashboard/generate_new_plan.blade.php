@@ -16,7 +16,7 @@
                             <h2 class="fw-800 mb-0">📝 Generate New Study Plan</h2>
                             <p style="color: #666; margin-top: 4px;">Create a personalized AI-powered study schedule</p>
                         </div>
-                        <a href="" class="btn btn-brutal btn-brutal-outline" style="font-size: 0.85rem; padding: 8px 20px;">
+                        <a href="{{ route('study-plan') }}" class="btn btn-brutal btn-brutal-outline" style="font-size: 0.85rem; padding: 8px 20px;">
                             <i class="bi bi-arrow-left"></i> Back to Plans
                         </a>
                     </div>

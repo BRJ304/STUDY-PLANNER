@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\StudyPlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,22 +27,34 @@ class StudyPlanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'subjects' => 'required|array',
-            'preferred_start_time' => 'required',
-            'preferred_end_time' => 'required',
-            'study_duration' => 'required|integer',
-            'break_duration' => 'required|integer',
-            'study_days' => 'required|array',
-            'weekly_goal_hours' => 'required|integer',
-            'description' => 'nullable|text',
-            'title' => 'required|varchar|max:255',
-            'difficulty_level'=> 'default|varchar|max:50',
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'subjects' => ['required', 'array'],
+            'preferred_start_time' => ['required', 'date_format:H:i'],
+            'preferred_end_time' => ['required', 'date_format:H:i'],
+            'study_duration' => ['nullable', 'integer', 'min:1'],
+            'break_duration' => ['nullable', 'integer', 'min:1'],
+            'study_days' => ['nullable', 'array'],
+            'weekly_goal_hours' => ['required', 'integer', 'min:1'],
+            'difficulty_level' => ['nullable', 'string', 'max:50'],
         ]);
-        
-        // Store study plan (replace with actual logic)
-        // StudyPlan::create([...]);
-        
-        return redirect()->route('dashboard.study-plan')
+
+        StudyPlan::create([
+            'user_id' => Auth::id(),
+            'title' => $request->title,
+            'description' => $request->description,
+            'preferred_start_time' => $request->preferred_start_time,
+            'preferred_end_time' => $request->preferred_end_time,
+            'study_duration' => $request->input('study_duration', 60),
+            'break_duration' => $request->input('break_duration', 15),
+            'study_days' => $request->input('study_days', ['monday', 'wednesday', 'friday']),
+            'weekly_goal_hours' => $request->weekly_goal_hours,
+            'subjects' => $request->subjects,
+            'difficulty_level' => $request->input('difficulty_level', 'medium'),
+            'status' => 'active',
+        ]);
+
+        return redirect()->route('study-plan')
             ->with('success', 'Study plan created successfully!');
     }
     

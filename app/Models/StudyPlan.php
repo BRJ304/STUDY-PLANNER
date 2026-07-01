@@ -16,6 +16,7 @@ class StudyPlan extends Model
      *
      * @var array<int, string>
      */
+   protected $table = 'study-plan';
     protected $fillable = [
         'user_id',
         'title',
@@ -37,14 +38,13 @@ class StudyPlan extends Model
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'study_days' => 'array', // Store as JSON array
-        'preferred_start_time' => 'datetime:H:i',
-        'preferred_end_time' => 'datetime:H:i',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+  protected $casts = [
+    'study_days' => 'array',
+    'subjects' => 'array',
 
+    'preferred_start_time' => 'datetime:H:i',
+    'preferred_end_time' => 'datetime:H:i',
+];
     /**
      * The attributes that should be hidden for serialization.
      *

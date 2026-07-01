@@ -21,10 +21,10 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('dashboard.study-plan') ? 'active' : '' }}" 
-               href="/study-plan"
-               style="color: {{ request()->routeIs('dashboard.study-plan') ? 'var(--brown)' : '#aaa' }}; 
-                      background: {{ request()->routeIs('dashboard.study-plan') ? '#222' : 'transparent' }};
+            <a class="nav-link {{ request()->routeIs('study-plan') ? 'active' : '' }}" 
+               href="{{ route('study-plan') }}"
+               style="color: {{ request()->routeIs('study-plan') ? 'var(--brown)' : '#aaa' }}; 
+                      background: {{ request()->routeIs('study-plan') ? '#222' : 'transparent' }};
                       border: var(--border); 
                       padding: 12px 16px; 
                       font-weight: 700; 
@@ -34,10 +34,10 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('dashboard.progress') ? 'active' : '' }}" 
-               href="/progress"
-               style="color: {{ request()->routeIs('dashboard.progress') ? 'var(--brown)' : '#aaa' }}; 
-                      background: {{ request()->routeIs('dashboard.progress') ? '#222' : 'transparent' }};
+            <a class="nav-link {{ request()->routeIs('progress') ? 'active' : '' }}" 
+               href="{{ route('progress') }}"
+               style="color: {{ request()->routeIs('progress') ? 'var(--brown)' : '#aaa' }}; 
+                      background: {{ request()->routeIs('progress') ? '#222' : 'transparent' }};
                       border: var(--border); 
                       padding: 12px 16px; 
                       font-weight: 700; 
@@ -48,10 +48,10 @@
         </li>
        
         <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('dashboard.materials') ? 'active' : '' }}" 
-               href="/materials"
-               style="color: {{ request()->routeIs('dashboard.materials') ? 'var(--brown)' : '#aaa' }}; 
-                      background: {{ request()->routeIs('dashboard.materials') ? '#222' : 'transparent' }};
+            <a class="nav-link {{ request()->routeIs('materials') ? 'active' : '' }}" 
+               href="{{ route('materials') }}"
+               style="color: {{ request()->routeIs('materials') ? 'var(--brown)' : '#aaa' }}; 
+                      background: {{ request()->routeIs('materials') ? '#222' : 'transparent' }};
                       border: var(--border); 
                       padding: 12px 16px; 
                       font-weight: 700; 
@@ -61,10 +61,10 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('dashboard.profile') ? 'active' : '' }}" 
-               href="/profile"
-               style="color: {{ request()->routeIs('dashboard.profile') ? 'var(--brown)' : '#aaa' }}; 
-                      background: {{ request()->routeIs('dashboard.profile') ? '#222' : 'transparent' }};
+            <a class="nav-link {{ request()->routeIs('profile') ? 'active' : '' }}" 
+               href="{{ route('profile') }}"
+               style="color: {{ request()->routeIs('profile') ? 'var(--brown)' : '#aaa' }}; 
+                      background: {{ request()->routeIs('profile') ? '#222' : 'transparent' }};
                       border: var(--border); 
                       padding: 12px 16px; 
                       font-weight: 700; 
@@ -74,10 +74,10 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('dashboard.settings') ? 'active' : '' }}" 
-               href="/settings"
-               style="color: {{ request()->routeIs('dashboard.settings') ? 'var(--brown)' : '#aaa' }}; 
-                      background: {{ request()->routeIs('dashboard.settings') ? '#222' : 'transparent' }};
+            <a class="nav-link {{ request()->routeIs('settings') ? 'active' : '' }}" 
+               href="{{ route('settings') }}"
+               style="color: {{ request()->routeIs('settings') ? 'var(--brown)' : '#aaa' }}; 
+                      background: {{ request()->routeIs('settings') ? '#222' : 'transparent' }};
                       border: var(--border); 
                       padding: 12px 16px; 
                       font-weight: 700; 
@@ -89,8 +89,7 @@
     </ul>
 
     <div class="sidebar-footer mt-4" style="border-top: 2px solid #222; padding-top: 16px;">
-        <form method="POST">
-            @csrf
+        <form method="GET" action="{{ route('logout') }}">
             <button type="submit" style="background: none; border: var(--border); padding: 10px 16px; width: 100%; color: #aaa; font-weight: 700; font-size: 0.85rem; text-align: left; transition: all 0.1s;">
                 <i class="bi bi-box-arrow-right"></i> Logout
             </button>
