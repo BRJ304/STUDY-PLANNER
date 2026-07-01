@@ -39,6 +39,11 @@ class StudyPlanController extends Controller
             'difficulty_level' => ['nullable', 'string', 'max:50'],
         ]);
 
+        // Deactivate (pause) any existing active study plans for the user
+        StudyPlan::where('user_id', Auth::id())
+            ->where('status', 'active')
+            ->update(['status' => 'paused']);
+
         StudyPlan::create([
             'user_id' => Auth::id(),
             'title' => $request->title,
@@ -63,7 +68,16 @@ class StudyPlanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Update study plan (replace with actual logic)
+        $plan = StudyPlan::where('user_id', Auth::id())->findOrFail($id);
+        
+        $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'status' => ['nullable', 'string', 'in:active,paused,completed'],
+        ]);
+        
+        $plan->update($request->only('title', 'description', 'status'));
+        
         return back()->with('success', 'Study plan updated successfully!');
     }
     
@@ -72,34 +86,83 @@ class StudyPlanController extends Controller
      */
     public function destroy($id)
     {
-        // Delete study plan (replace with actual logic)
+        $plan = StudyPlan::where('user_id', Auth::id())->findOrFail($id);
+        $plan->studySessions()->delete();
+        $plan->delete();
+        
         return back()->with('success', 'Study plan deleted successfully!');
     }
     
     private function getWeeklySchedule()
     {
-        // Get weekly schedule (replace with actual logic)
-        return [
-            ['day' => 'Monday', 'subjects' => 'Math, Physics', 'hours' => 4.5, 'status' => 'Complete'],
-            ['day' => 'Tuesday', 'subjects' => 'Chemistry, English', 'hours' => 3.5, 'status' => 'Complete'],
-            ['day' => 'Wednesday', 'subjects' => 'Math, Chemistry', 'hours' => 4.0, 'status' => 'In Progress'],
-            ['day' => 'Thursday', 'subjects' => 'Physics, English', 'hours' => 3.0, 'status' => 'Upcoming'],
-            ['day' => 'Friday', 'subjects' => 'Review & Practice', 'hours' => 2.5, 'status' => 'Upcoming'],
-        ];
+        $user = Auth::user();
+        $activePlan = StudyPlan::where('user_id', $user->id)->where('status', 'active')->first();
+        
+        if (!$activePlan) {
+            return [
+                ['day' => 'Monday', 'subjects' => 'No active plan. Create one!', 'hours' => 0, 'status' => 'No Plan'],
+            ];
+        }
+        
+        $schedule = [];
+        $days = $activePlan->study_days ?? [];
+        $subjectsStr = is_array($activePlan->subjects) ? implode(', ', $activePlan->subjects) : (string)$activePlan->subjects;
+        $hoursPerDay = round($activePlan->study_duration / 60, 1);
+        
+        // Fetch progress records for the current week where hours were logged
+        $progressDays = \App\Models\Progress::where('user_id', $user->id)
+            ->where('date', '>=', now()->startOfWeek()->toDateString())
+            ->where('hours_studied', '>', 0)
+            ->get()
+            ->map(function($p) {
+                return strtolower($p->date->format('l'));
+            })
+            ->toArray();
+        
+        foreach ($days as $day) {
+            $isComplete = in_array(strtolower($day), $progressDays);
+            $isToday = strtolower($day) === strtolower(now()->format('l'));
+            
+            $schedule[] = [
+                'day' => ucfirst($day),
+                'subjects' => $subjectsStr ?: 'General Study',
+                'hours' => $hoursPerDay ?: 1.0,
+                'status' => $isComplete ? 'Complete' : ($isToday ? 'In Progress' : 'Active Schedule'),
+            ];
+        }
+        
+        return $schedule;
     }
     
     private function getWeeklyStats()
     {
-
-        // Get weekly stats (replace with actual logic)
+        $user = Auth::user();
+        $activePlan = StudyPlan::where('user_id', $user->id)->where('status', 'active')->first();
+        
+        $targetHours = $activePlan ? $activePlan->weekly_goal_hours : 0;
+        
+        $completedHours = \App\Models\Progress::where('user_id', $user->id)
+            ->where('date', '>=', now()->subDays(7)->toDateString())
+            ->sum('hours_studied');
+            
+        $completedSessions = \App\Models\StudySession::where('user_id', $user->id)
+            ->where('status', 'completed')
+            ->where('updated_at', '>=', now()->subDays(7))
+            ->count();
+            
+        $totalSessions = \App\Models\StudySession::where('user_id', $user->id)
+            ->where('updated_at', '>=', now()->subDays(7))
+            ->count();
+            
         return [
-            'total_hours' => 17.5,
-            'target_hours' => 22,
-            'completed_sessions' => 8,
-            'total_sessions' => 10,
-            'productivity_score' => 92,
+            'total_hours' => round((float)$completedHours, 1),
+            'target_hours' => $targetHours ?: 10,
+            'completed_sessions' => $completedSessions ?: 0,
+            'total_sessions' => $totalSessions ?: 5,
+            'productivity_score' => 90,
         ];
     }
+    
     public function generate_new_plan()
     {
         return view('dashboard.generate_new_plan');

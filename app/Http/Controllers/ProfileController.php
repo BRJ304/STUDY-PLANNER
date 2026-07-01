@@ -29,13 +29,20 @@ class ProfileController extends Controller
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
             'school' => 'nullable|string|max:255',
             'major' => 'nullable|string|max:255',
-            'year_of_study' => 'nullable|string',
-            'country' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:20',
-            'bio' => 'nullable|string|max:500',
         ]);
         
-        $user->update($request->all());
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
+        
+        $user->info()->updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'school' => $request->school,
+                'major' => $request->major,
+            ]
+        );
         
         return back()->with('success', 'Profile updated successfully!');
     }

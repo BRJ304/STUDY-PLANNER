@@ -416,7 +416,7 @@
     function confirmDelete(id) {
         const form = document.getElementById('deleteForm');
         if (form) {
-            form.action = "{{ route('materials.destroy', $material['id']) }}/"
+            form.action = "/materials/" + id;
         }
         const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
         modal.show();

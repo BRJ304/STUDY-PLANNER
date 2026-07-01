@@ -74,7 +74,7 @@
                                     <div class="form-check mb-3">
                                         <input class="form-check-input" type="checkbox" id="email_notifications" name="email_notifications"
                                                style="border: var(--border); border-radius: 0;"
-                                               {{ Auth::user()->email_notifications ?? 'checked' }}>
+                                               {{ Auth::user()->email_notifications ? 'checked' : '' }}>
                                         <label class="form-check-label" for="email_notifications" style="font-weight: 600;">
                                             Email Notifications
                                         </label>
@@ -84,7 +84,7 @@
                                     <div class="form-check mb-3">
                                         <input class="form-check-input" type="checkbox" id="push_notifications" name="push_notifications"
                                                style="border: var(--border); border-radius: 0;"
-                                               {{ Auth::user()->push_notifications ?? 'checked' }}>
+                                               {{ Auth::user()->push_notifications ? 'checked' : '' }}>
                                         <label class="form-check-label" for="push_notifications" style="font-weight: 600;">
                                             Push Notifications
                                         </label>
@@ -94,7 +94,7 @@
                                     <div class="form-check mb-3">
                                         <input class="form-check-input" type="checkbox" id="study_reminders" name="study_reminders"
                                                style="border: var(--border); border-radius: 0;"
-                                               {{ Auth::user()->study_reminders ?? 'checked' }}>
+                                               {{ Auth::user()->study_reminders ? 'checked' : '' }}>
                                         <label class="form-check-label" for="study_reminders" style="font-weight: 600;">
                                             Study Reminders
                                         </label>
@@ -104,7 +104,7 @@
                                     <div class="form-check mb-3">
                                         <input class="form-check-input" type="checkbox" id="progress_reports" name="progress_reports"
                                                style="border: var(--border); border-radius: 0;"
-                                               {{ Auth::user()->progress_reports ?? 'checked' }}>
+                                               {{ Auth::user()->progress_reports ? 'checked' : '' }}>
                                         <label class="form-check-label" for="progress_reports" style="font-weight: 600;">
                                             Weekly Progress Reports
                                         </label>
@@ -114,7 +114,7 @@
                                     <div class="form-check mb-3">
                                         <input class="form-check-input" type="checkbox" id="exam_alerts" name="exam_alerts"
                                                style="border: var(--border); border-radius: 0;"
-                                               {{ Auth::user()->exam_alerts ?? 'checked' }}>
+                                               {{ Auth::user()->exam_alerts ? 'checked' : '' }}>
                                         <label class="form-check-label" for="exam_alerts" style="font-weight: 600;">
                                             Exam Alerts
                                         </label>
@@ -123,7 +123,8 @@
 
                                     <div class="form-check mb-3">
                                         <input class="form-check-input" type="checkbox" id="marketing_emails" name="marketing_emails"
-                                               style="border: var(--border); border-radius: 0;">
+                                               style="border: var(--border); border-radius: 0;"
+                                               {{ Auth::user()->marketing_emails ? 'checked' : '' }}>
                                         <label class="form-check-label" for="marketing_emails" style="font-weight: 600;">
                                             Marketing Emails
                                         </label>
@@ -146,9 +147,9 @@
                                         <label for="profile_visibility" class="form-label" style="font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Profile Visibility</label>
                                         <select class="form-control" id="profile_visibility" name="profile_visibility"
                                                 style="border: var(--border); border-radius: 0; padding: 12px 16px;">
-                                            <option value="public">Public - Anyone can see your profile</option>
-                                            <option value="private" selected>Private - Only you can see your profile</option>
-                                            <option value="friends">Friends Only - Only friends can see your profile</option>
+                                            <option value="public" {{ Auth::user()->profile_visibility == 'public' ? 'selected' : '' }}>Public - Anyone can see your profile</option>
+                                            <option value="private" {{ Auth::user()->profile_visibility == 'private' ? 'selected' : '' }}>Private - Only you can see your profile</option>
+                                            <option value="friends" {{ Auth::user()->profile_visibility == 'friends' ? 'selected' : '' }}>Friends Only - Only friends can see your profile</option>
                                         </select>
                                     </div>
 
@@ -156,15 +157,16 @@
                                         <label for="study_data_sharing" class="form-label" style="font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Study Data Sharing</label>
                                         <select class="form-control" id="study_data_sharing" name="study_data_sharing"
                                                 style="border: var(--border); border-radius: 0; padding: 12px 16px;">
-                                            <option value="none" selected>Don't share my study data</option>
-                                            <option value="friends">Share with friends only</option>
-                                            <option value="all">Share with everyone</option>
+                                            <option value="none" {{ Auth::user()->study_data_sharing == 'none' ? 'selected' : '' }}>Don't share my study data</option>
+                                            <option value="friends" {{ Auth::user()->study_data_sharing == 'friends' ? 'selected' : '' }}>Share with friends only</option>
+                                            <option value="all" {{ Auth::user()->study_data_sharing == 'all' ? 'selected' : '' }}>Share with everyone</option>
                                         </select>
                                     </div>
 
                                     <div class="form-check mb-3">
                                         <input class="form-check-input" type="checkbox" id="show_progress" name="show_progress"
-                                               style="border: var(--border); border-radius: 0;">
+                                               style="border: var(--border); border-radius: 0;"
+                                               {{ Auth::user()->show_progress ? 'checked' : '' }}>
                                         <label class="form-check-label" for="show_progress" style="font-weight: 600;">
                                             Show Progress to Others
                                         </label>
@@ -173,7 +175,8 @@
 
                                     <div class="form-check mb-3">
                                         <input class="form-check-input" type="checkbox" id="show_online_status" name="show_online_status"
-                                               style="border: var(--border); border-radius: 0;" checked>
+                                               style="border: var(--border); border-radius: 0;"
+                                               {{ Auth::user()->show_online_status ? 'checked' : '' }}>
                                         <label class="form-check-label" for="show_online_status" style="font-weight: 600;">
                                             Show Online Status
                                         </label>
@@ -196,13 +199,13 @@
                                         <label for="language" class="form-label" style="font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Language</label>
                                         <select class="form-control" id="language" name="language"
                                                 style="border: var(--border); border-radius: 0; padding: 12px 16px;">
-                                            <option value="en" selected>English</option>
-                                            <option value="es">Spanish</option>
-                                            <option value="fr">French</option>
-                                            <option value="de">German</option>
-                                            <option value="zh">Chinese</option>
-                                            <option value="ja">Japanese</option>
-                                            <option value="ko">Korean</option>
+                                            <option value="en" {{ Auth::user()->language == 'en' ? 'selected' : '' }}>English</option>
+                                            <option value="es" {{ Auth::user()->language == 'es' ? 'selected' : '' }}>Spanish</option>
+                                            <option value="fr" {{ Auth::user()->language == 'fr' ? 'selected' : '' }}>French</option>
+                                            <option value="de" {{ Auth::user()->language == 'de' ? 'selected' : '' }}>German</option>
+                                            <option value="zh" {{ Auth::user()->language == 'zh' ? 'selected' : '' }}>Chinese</option>
+                                            <option value="ja" {{ Auth::user()->language == 'ja' ? 'selected' : '' }}>Japanese</option>
+                                            <option value="ko" {{ Auth::user()->language == 'ko' ? 'selected' : '' }}>Korean</option>
                                         </select>
                                     </div>
 
@@ -210,9 +213,9 @@
                                         <label for="theme" class="form-label" style="font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Theme</label>
                                         <select class="form-control" id="theme" name="theme"
                                                 style="border: var(--border); border-radius: 0; padding: 12px 16px;">
-                                            <option value="light" selected>Light</option>
-                                            <option value="dark">Dark</option>
-                                            <option value="system">System Default</option>
+                                            <option value="light" {{ Auth::user()->theme == 'light' ? 'selected' : '' }}>Light</option>
+                                            <option value="dark" {{ Auth::user()->theme == 'dark' ? 'selected' : '' }}>Dark</option>
+                                            <option value="system" {{ Auth::user()->theme == 'system' ? 'selected' : '' }}>System Default</option>
                                         </select>
                                     </div>
 
@@ -220,10 +223,10 @@
                                         <label for="font_size" class="form-label" style="font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Font Size</label>
                                         <select class="form-control" id="font_size" name="font_size"
                                                 style="border: var(--border); border-radius: 0; padding: 12px 16px;">
-                                            <option value="small">Small</option>
-                                            <option value="medium" selected>Medium</option>
-                                            <option value="large">Large</option>
-                                            <option value="xlarge">Extra Large</option>
+                                            <option value="small" {{ Auth::user()->font_size == 'small' ? 'selected' : '' }}>Small</option>
+                                            <option value="medium" {{ Auth::user()->font_size == 'medium' ? 'selected' : '' }}>Medium</option>
+                                            <option value="large" {{ Auth::user()->font_size == 'large' ? 'selected' : '' }}>Large</option>
+                                            <option value="xlarge" {{ Auth::user()->font_size == 'xlarge' ? 'selected' : '' }}>Extra Large</option>
                                         </select>
                                     </div>
 
@@ -231,17 +234,17 @@
                                         <label for="timezone" class="form-label" style="font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Timezone</label>
                                         <select class="form-control" id="timezone" name="timezone"
                                                 style="border: var(--border); border-radius: 0; padding: 12px 16px;">
-                                            <option value="UTC">UTC</option>
-                                            <option value="America/New_York">Eastern Time (ET)</option>
-                                            <option value="America/Chicago">Central Time (CT)</option>
-                                            <option value="America/Denver">Mountain Time (MT)</option>
-                                            <option value="America/Los_Angeles">Pacific Time (PT)</option>
-                                            <option value="Europe/London">GMT (London)</option>
-                                            <option value="Europe/Paris">CET (Paris)</option>
-                                            <option value="Asia/Dubai">GST (Dubai)</option>
-                                            <option value="Asia/Kolkata">IST (India)</option>
-                                            <option value="Asia/Tokyo">JST (Tokyo)</option>
-                                            <option value="Australia/Sydney">AEDT (Sydney)</option>
+                                            <option value="UTC" {{ Auth::user()->timezone == 'UTC' ? 'selected' : '' }}>UTC</option>
+                                            <option value="America/New_York" {{ Auth::user()->timezone == 'America/New_York' ? 'selected' : '' }}>Eastern Time (ET)</option>
+                                            <option value="America/Chicago" {{ Auth::user()->timezone == 'America/Chicago' ? 'selected' : '' }}>Central Time (CT)</option>
+                                            <option value="America/Denver" {{ Auth::user()->timezone == 'America/Denver' ? 'selected' : '' }}>Mountain Time (MT)</option>
+                                            <option value="America/Los_Angeles" {{ Auth::user()->timezone == 'America/Los_Angeles' ? 'selected' : '' }}>Pacific Time (PT)</option>
+                                            <option value="Europe/London" {{ Auth::user()->timezone == 'Europe/London' ? 'selected' : '' }}>GMT (London)</option>
+                                            <option value="Europe/Paris" {{ Auth::user()->timezone == 'Europe/Paris' ? 'selected' : '' }}>CET (Paris)</option>
+                                            <option value="Asia/Dubai" {{ Auth::user()->timezone == 'Asia/Dubai' ? 'selected' : '' }}>GST (Dubai)</option>
+                                            <option value="Asia/Kolkata" {{ Auth::user()->timezone == 'Asia/Kolkata' ? 'selected' : '' }}>IST (India)</option>
+                                            <option value="Asia/Tokyo" {{ Auth::user()->timezone == 'Asia/Tokyo' ? 'selected' : '' }}>JST (Tokyo)</option>
+                                            <option value="Australia/Sydney" {{ Auth::user()->timezone == 'Australia/Sydney' ? 'selected' : '' }}>AEDT (Sydney)</option>
                                         </select>
                                     </div>
 
@@ -261,10 +264,10 @@
                                         <label for="study_preference" class="form-label" style="font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Preferred Study Time</label>
                                         <select class="form-control" id="study_preference" name="study_preference"
                                                 style="border: var(--border); border-radius: 0; padding: 12px 16px;">
-                                            <option value="morning">Morning (6 AM - 12 PM)</option>
-                                            <option value="afternoon" selected>Afternoon (12 PM - 6 PM)</option>
-                                            <option value="evening">Evening (6 PM - 12 AM)</option>
-                                            <option value="night">Night (12 AM - 6 AM)</option>
+                                            <option value="morning" {{ Auth::user()->study_preference == 'morning' ? 'selected' : '' }}>Morning (6 AM - 12 PM)</option>
+                                            <option value="afternoon" {{ Auth::user()->study_preference == 'afternoon' ? 'selected' : '' }}>Afternoon (12 PM - 6 PM)</option>
+                                            <option value="evening" {{ Auth::user()->study_preference == 'evening' ? 'selected' : '' }}>Evening (6 PM - 12 AM)</option>
+                                            <option value="night" {{ Auth::user()->study_preference == 'night' ? 'selected' : '' }}>Night (12 AM - 6 AM)</option>
                                         </select>
                                     </div>
 
@@ -272,10 +275,10 @@
                                         <label for="learning_style" class="form-label" style="font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Learning Style</label>
                                         <select class="form-control" id="learning_style" name="learning_style"
                                                 style="border: var(--border); border-radius: 0; padding: 12px 16px;">
-                                            <option value="visual">Visual - Learn by seeing</option>
-                                            <option value="auditory">Auditory - Learn by listening</option>
-                                            <option value="reading">Reading/Writing - Learn by reading and writing</option>
-                                            <option value="kinesthetic">Kinesthetic - Learn by doing</option>
+                                            <option value="visual" {{ Auth::user()->learning_style == 'visual' ? 'selected' : '' }}>Visual - Learn by seeing</option>
+                                            <option value="auditory" {{ Auth::user()->learning_style == 'auditory' ? 'selected' : '' }}>Auditory - Learn by listening</option>
+                                            <option value="reading" {{ Auth::user()->learning_style == 'reading' ? 'selected' : '' }}>Reading/Writing - Learn by reading and writing</option>
+                                            <option value="kinesthetic" {{ Auth::user()->learning_style == 'kinesthetic' ? 'selected' : '' }}>Kinesthetic - Learn by doing</option>
                                         </select>
                                     </div>
 
@@ -283,10 +286,10 @@
                                         <label for="goal" class="form-label" style="font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Study Goal</label>
                                         <select class="form-control" id="goal" name="goal"
                                                 style="border: var(--border); border-radius: 0; padding: 12px 16px;">
-                                            <option value="pass">Pass Exams</option>
-                                            <option value="excellent" selected>Get Excellent Grades</option>
-                                            <option value="master">Master Subject</option>
-                                            <option value="prepare">Prepare for Future</option>
+                                            <option value="pass" {{ Auth::user()->goal == 'pass' ? 'selected' : '' }}>Pass Exams</option>
+                                            <option value="excellent" {{ Auth::user()->goal == 'excellent' ? 'selected' : '' }}>Get Excellent Grades</option>
+                                            <option value="master" {{ Auth::user()->goal == 'master' ? 'selected' : '' }}>Master Subject</option>
+                                            <option value="prepare" {{ Auth::user()->goal == 'prepare' ? 'selected' : '' }}>Prepare for Future</option>
                                         </select>
                                     </div>
 
@@ -294,11 +297,11 @@
                                         <label for="weekly_goal_hours" class="form-label" style="font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Weekly Study Goal</label>
                                         <select class="form-control" id="weekly_goal_hours" name="weekly_goal_hours"
                                                 style="border: var(--border); border-radius: 0; padding: 12px 16px;">
-                                            <option value="5">5 hours/week</option>
-                                            <option value="10" selected>10 hours/week</option>
-                                            <option value="15">15 hours/week</option>
-                                            <option value="20">20 hours/week</option>
-                                            <option value="25">25+ hours/week</option>
+                                            <option value="5" {{ Auth::user()->weekly_goal_hours == 5 ? 'selected' : '' }}>5 hours/week</option>
+                                            <option value="10" {{ Auth::user()->weekly_goal_hours == 10 ? 'selected' : '' }}>10 hours/week</option>
+                                            <option value="15" {{ Auth::user()->weekly_goal_hours == 15 ? 'selected' : '' }}>15 hours/week</option>
+                                            <option value="20" {{ Auth::user()->weekly_goal_hours == 20 ? 'selected' : '' }}>20 hours/week</option>
+                                            <option value="25" {{ Auth::user()->weekly_goal_hours == 25 ? 'selected' : '' }}>25+ hours/week</option>
                                         </select>
                                     </div>
 

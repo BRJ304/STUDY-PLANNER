@@ -33,42 +33,96 @@ class DashController extends Controller
     
     private function getStudyHours()
     {
-        // Calculate study hours (replace with actual logic)
-        return 24.5;
+        return round((float)\App\Models\Progress::where('user_id', Auth::id())->sum('hours_studied'), 1);
     }
     
     private function getTopicsMastered()
     {
-        // Count mastered topics (replace with actual logic)
-        return 18;
+        return (int)\App\Models\Progress::where('user_id', Auth::id())->sum('topics_mastered');
     }
     
     private function getExamReadiness()
     {
-        // Calculate exam readiness (replace with actual logic)
-        return 87;
+        $lastLog = \App\Models\Progress::where('user_id', Auth::id())->orderBy('date', 'desc')->first();
+        return $lastLog ? $lastLog->exam_readiness : 0;
     }
     
     private function getStudyStreak()
     {
-        // Calculate study streak (replace with actual logic)
-        return 12;
+        $dates = \App\Models\Progress::where('user_id', Auth::id())
+            ->where('hours_studied', '>', 0)
+            ->orderBy('date', 'desc')
+            ->pluck('date')
+            ->map(function($d) { return $d ? $d->toDateString() : ''; })
+            ->unique()
+            ->toArray();
+            
+        if (empty($dates)) {
+            return 0;
+        }
+        
+        $streak = 0;
+        $currentDate = now();
+        
+        $todayStr = $currentDate->toDateString();
+        $yesterdayStr = $currentDate->subDay()->toDateString();
+        
+        if (!in_array($todayStr, $dates) && !in_array($yesterdayStr, $dates)) {
+            return 0;
+        }
+        
+        $checkDate = in_array($todayStr, $dates) ? now() : now()->subDay();
+        
+        while (in_array($checkDate->toDateString(), $dates)) {
+            $streak++;
+            $checkDate->subDay();
+        }
+        
+        return $streak;
     }
     
     private function getTodaySchedule()
     {
-        // Get today's schedule (replace with actual logic)
-        return [
-            ['time' => '9:00 AM', 'subject' => 'Mathematics', 'status' => 'In Progress'],
-            ['time' => '10:30 AM', 'subject' => 'Physics', 'status' => 'Upcoming'],
-            ['time' => '1:00 PM', 'subject' => 'Chemistry', 'status' => 'Upcoming'],
-        ];
+        $sessions = \App\Models\StudySession::where('user_id', Auth::id())
+            ->whereDate('start_time', now()->toDateString())
+            ->orderBy('start_time', 'asc')
+            ->get();
+            
+        if ($sessions->isEmpty()) {
+            $activePlan = \App\Models\StudyPlan::where('user_id', Auth::id())->where('status', 'active')->first();
+            if ($activePlan && in_array(strtolower(now()->format('l')), $activePlan->study_days ?? [])) {
+                $subjects = $activePlan->subjects ?? [];
+                $schedule = [];
+                $startTime = now()->setTimeFrom($activePlan->preferred_start_time);
+                foreach ($subjects as $idx => $subj) {
+                    $schedule[] = [
+                        'time' => $startTime->format('g:i A'),
+                        'subject' => $subj,
+                        'status' => 'Upcoming'
+                    ];
+                    $startTime->addMinutes($activePlan->study_duration + $activePlan->break_duration);
+                }
+                return $schedule;
+            }
+            
+            return [
+                ['time' => 'N/A', 'subject' => 'No sessions scheduled for today', 'status' => 'No Session']
+            ];
+        }
+        
+        return $sessions->map(function($s) {
+            return [
+                'time' => $s->start_time ? $s->start_time->format('g:i A') : 'N/A',
+                'subject' => $s->subject . ($s->topic ? ' - ' . $s->topic : ''),
+                'status' => ucfirst($s->status)
+            ];
+        })->toArray();
     }
     
     private function getProgressData()
     {
-        // Get progress data (replace with actual logic)
-        return [
+        $lastLog = \App\Models\Progress::where('user_id', Auth::id())->orderBy('date', 'desc')->first();
+        return $lastLog && !empty($lastLog->subject_progress) ? $lastLog->subject_progress : [
             ['subject' => 'Mathematics', 'progress' => 75],
             ['subject' => 'Physics', 'progress' => 60],
             ['subject' => 'Chemistry', 'progress' => 45],

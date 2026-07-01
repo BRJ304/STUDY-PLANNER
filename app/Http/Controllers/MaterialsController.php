@@ -14,7 +14,9 @@ class MaterialsController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $materials = $this->getMaterials();
+        $materials = \App\Models\Material::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
         
         return view('dashboard.materials', compact('user', 'materials'));
     }
@@ -34,14 +36,22 @@ class MaterialsController extends Controller
             'is_important' => 'nullable|boolean',
         ]);
         
-        // Store file (replace with actual logic)
         if ($request->hasFile('material_file')) {
             $file = $request->file('material_file');
             $filename = time() . '_' . $file->getClientOriginalName();
             $path = $file->storeAs('materials/' . Auth::id(), $filename, 'public');
             
             // Store in database
-            // Material::create([...]);
+            \App\Models\Material::create([
+                'user_id' => Auth::id(),
+                'title' => $request->material_title,
+                'description' => $request->material_description,
+                'file_path' => $path,
+                'subject' => $request->material_subject,
+                'type' => $request->material_type,
+                'tags' => $request->material_tags,
+                'is_important' => $request->has('is_important') ? (bool)$request->is_important : false,
+            ]);
         }
         
         return back()->with('success', 'Material uploaded successfully!');
@@ -52,7 +62,15 @@ class MaterialsController extends Controller
      */
     public function destroy($id)
     {
-        // Delete material (replace with actual logic)
+        $material = \App\Models\Material::where('user_id', Auth::id())->findOrFail($id);
+        
+        // Delete file from disk
+        if (Storage::disk('public')->exists($material->file_path)) {
+            Storage::disk('public')->delete($material->file_path);
+        }
+        
+        $material->delete();
+        
         return back()->with('success', 'Material deleted successfully!');
     }
     
@@ -61,44 +79,15 @@ class MaterialsController extends Controller
      */
     public function download($id)
     {
-        // Download material (replace with actual logic)
-        // $material = Material::find($id);
-        // return Storage::download($material->file_path);
+        $material = \App\Models\Material::where('user_id', Auth::id())->findOrFail($id);
         
-        return back()->with('success', 'Download started!');
-    }
-    
-    private function getMaterials()
-    {
-        // Get materials (replace with actual logic)
-        return [
-            [
-                'id' => 1,
-                'title' => 'Math Notes',
-                'description' => 'Chapter 5 - Calculus',
-                'type' => 'notes',
-                'icon' => '📄',
-                'uploaded' => 'Jan 10',
-                'subject' => 'Mathematics'
-            ],
-            [
-                'id' => 2,
-                'title' => 'Physics Lab Report',
-                'description' => 'Mechanics - Experiment 3',
-                'type' => 'assignment',
-                'icon' => '📊',
-                'uploaded' => 'Jan 8',
-                'subject' => 'Physics'
-            ],
-            [
-                'id' => 3,
-                'title' => 'Chemistry Notes',
-                'description' => 'Organic Chemistry - Chapter 3',
-                'type' => 'notes',
-                'icon' => '📝',
-                'uploaded' => 'Jan 6',
-                'subject' => 'Chemistry'
-            ],
-        ];
+        if (Storage::disk('public')->exists($material->file_path)) {
+            return Storage::disk('public')->download(
+                $material->file_path, 
+                $material->title . '.' . pathinfo($material->file_path, PATHINFO_EXTENSION)
+            );
+        }
+        
+        return back()->with('error', 'File not found on storage.');
     }
 }

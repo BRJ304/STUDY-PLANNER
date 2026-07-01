@@ -52,13 +52,15 @@
                                             <label for="school" class="form-label" style="font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">School/University</label>
                                             <input type="text" class="form-control" id="school" name="school"
                                                    style="border: var(--border); border-radius: 0; padding: 12px 16px;"
-                                                   placeholder="Enter your school name">
+                                                   placeholder="Enter your school name"
+                                                   value="{{ Auth::user()->info->school ?? '' }}">
                                         </div>
                                         <div class="col-12">
                                             <label for="major" class="form-label" style="font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Major/Program</label>
                                             <input type="text" class="form-control" id="major" name="major"
                                                    style="border: var(--border); border-radius: 0; padding: 12px 16px;"
-                                                   placeholder="Enter your major">
+                                                   placeholder="Enter your major"
+                                                   value="{{ Auth::user()->info->major ?? '' }}">
                                         </div>
                                         <div class="col-12">
                                             <button type="submit" class="btn btn-brutal btn-brutal-primary">Update Profile</button>
