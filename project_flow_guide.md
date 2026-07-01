@@ -79,16 +79,16 @@ Welcome to the **Study Planner** application guide. This document details the ap
 ## 🧑‍💻 File Directory Structure (Key Components)
 
 *   **Models**:
-    *   [User.php](file:///E:/jj%20clg/studyplanner/app/Models/User.php) - User relationships and fillable settings fields.
-    *   [UserInformation.php](file:///E:/jj%20clg/studyplanner/app/Models/UserInformation.php) - Maps to `user_information` table.
-    *   [Material.php](file:///E:/jj%20clg/studyplanner/app/Models/Material.php) - File asset trackers.
-    *   [StudySession.php](file:///E:/jj%20clg/studyplanner/app/Models/StudySession.php) - Calendar slot trackers.
+    *   [User.php](/app/Models/User.php) - User relationships and fillable settings fields.
+    *   [UserInformation.php](/app/Models/UserInformation.php) - Maps to `user_information` table.
+    *   [Material.php](/app/Models/Material.php) - File asset trackers.
+    *   [StudySession.php](/app/Models/StudySession.php) - Calendar slot trackers.
 *   **Controllers**:
-    *   [DashController.php](file:///E:/jj%20clg/studyplanner/app/Http/Controllers/DashController.php) - Aggregates analytics, streak counts, and today's schedule.
-    *   [StudyPlanController.php](file:///E:/jj%20clg/studyplanner/app/Http/Controllers/StudyPlanController.php) - Handles deactivating old plans, creating new ones, and building calendars.
-    *   [ProgressController.php](file:///E:/jj%20clg/studyplanner/app/Http/Controllers/ProgressController.php) - Controls daily logs and JSON exports.
-    *   [MaterialsController.php](file:///E:/jj%20clg/studyplanner/app/Http/Controllers/MaterialsController.php) - Coordinates secure file storage upload/download streams.
+    *   [DashController.php](/app/Http/Controllers/DashController.php) - Aggregates analytics, streak counts, and today's schedule.
+    *   [StudyPlanController.php](/app/Http/Controllers/StudyPlanController.php) - Handles deactivating old plans, creating new ones, and building calendars.
+    *   [ProgressController.php](/app/Http/Controllers/ProgressController.php) - Controls daily logs and JSON exports.
+    *   [MaterialsController.php](/app/Http/Controllers/MaterialsController.php) - Coordinates secure file storage upload/download streams.
 *   **Views**:
-    *   [index.blade.php](file:///E:/jj%20clg/studyplanner/resources/views/dashboard/index.blade.php) - Main dashboard UI.
-    *   [study-plan.blade.php](file:///E:/jj%20clg/studyplanner/resources/views/dashboard/study-plan.blade.php) - Calendar schedule and stats.
-    *   [progress.blade.php](file:///E:/jj%20clg/studyplanner/resources/views/dashboard/progress.blade.php) - Analytical charts and logging tools.
+    *   [index.blade.php](/resources/views/dashboard/index.blade.php) - Main dashboard UI.
+    *   [study-plan.blade.php](/resources/views/dashboard/study-plan.blade.php) - Calendar schedule and stats.
+    *   [progress.blade.php](/resources/views/dashboard/progress.blade.php) - Analytical charts and logging tools.
