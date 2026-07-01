@@ -89,7 +89,8 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('contact.submit') }}">
+                {{-- <form method="POST" action="{{ route('contact.submit') }}"> --}}
+                    <form>
                     @csrf
                     <div class="row g-3">
                         <div class="col-md-6">

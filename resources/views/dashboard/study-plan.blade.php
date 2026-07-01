@@ -5,10 +5,10 @@
     <div class="container-fluid px-0">
         <div class="row no-gap g-0">
             <div class="col-md-3 col-lg-2 dashboard-sidebar">
-                @include('dashboard.partials.sidebar')
+                @include('dashboard.sidebar')
             </div>
             <div class="col-md-9 col-lg-10 dashboard-main">
-                @include('dashboard.partials.header')
+                @include('dashboard.header')
                 <div class="dashboard-content p-4 p-md-5">
                     <h2 class="fw-800 mb-4">📝 Your Study Plan</h2>
                     
@@ -18,9 +18,12 @@
                                 <h4 style="font-weight: 800;">Weekly Overview</h4>
                                 <p style="color: #666; margin: 0;">Week of January 15-21, 2026</p>
                             </div>
-                            <button class="btn btn-brutal btn-brutal-primary" style="font-size: 0.85rem; padding: 8px 20px;">
-                                <i class="bi bi-plus"></i> Generate New Plan
-                            </button>
+                            <a href="/generate-new-plan">
+
+                                <button class="btn btn-brutal btn-brutal-primary" style="font-size: 0.85rem; padding: 8px 20px;">
+                                    <i class="bi bi-plus"></i> Generate New Plan
+                                </button>
+                            </a>
                         </div>
                     </div>
 

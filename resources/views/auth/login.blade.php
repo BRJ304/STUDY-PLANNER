@@ -34,7 +34,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('login.post') }}">
                     @csrf
 
                     <!-- Email Address -->
@@ -62,7 +62,7 @@
                                 Remember me
                             </label>
                         </div>
-                        <a href="{{ route('password.request') }}" style="color: var(--brown); font-weight: 700; font-size: 0.85rem; text-decoration: none;">
+                        <a href="#" style="color: var(--brown); font-weight: 700; font-size: 0.85rem; text-decoration: none;">
                             Forgot password?
                         </a>
                     </div>

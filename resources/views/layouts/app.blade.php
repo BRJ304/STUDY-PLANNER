@@ -479,9 +479,6 @@
 </head>
 
 <body>
-    <li class="nav-item"><a class="nav-link" href="/login-here">Login </a></li>
-                    <li class="nav-item"><a class="nav-link" href="/register-here">Register</a></li>
-
     <!-- NAVBAR (Bootstrap 5) -->
     <nav class="navbar navbar-expand-md navbar-brutal px-3 px-md-5 py-0">
         <div class="container-fluid px-0">
@@ -497,7 +494,7 @@
                     <li class="nav-item"><a class="nav-link" href="/about-us">About Us</a></li>
                     <li class="nav-item"><a class="nav-link" href="/contact-us">Contact Us</a></li>
                     <li class="nav-item"><a class="nav-link" href="/features">Features</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+                    {{-- <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li> --}}
                 
                     <!-- Auth Links - Show if authenticated -->
                 @auth
@@ -512,7 +509,7 @@
                     <span class="text-white me-2" style="font-weight: 600; font-size: 0.85rem;">
                         <i class="bi bi-person-circle"></i> {{ Auth::user()->name }}
                     </span>
-                    <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                    <form method="get" action="{{ route('logout') }}" class="d-inline">
                         @csrf
                         <button type="submit" class="btn btn-brutal btn-brutal-outline" style="padding: 6px 16px; font-size: 0.8rem;">
                             Logout

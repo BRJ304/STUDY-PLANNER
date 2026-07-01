@@ -5,10 +5,10 @@
     <div class="container-fluid px-0">
         <div class="row no-gap g-0">
             <div class="col-md-3 col-lg-2 dashboard-sidebar">
-                @include('dashboard.partials.sidebar')
+                @include('dashboard.sidebar')
             </div>
             <div class="col-md-9 col-lg-10 dashboard-main">
-                @include('dashboard.partials.header')
+                @include('dashboard.header')
                 <div class="dashboard-content p-4 p-md-5">
                     <h2 class="fw-800 mb-4">📊 Progress Analytics</h2>
 

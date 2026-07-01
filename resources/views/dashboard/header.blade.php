@@ -16,12 +16,12 @@
                 </span>
             </div>
             <div class="user-info d-flex align-items-center gap-2">
-                <div style="width: 36px; height: 36px; background: var(--brown); border: var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 0.9rem;">
+                {{-- <div style="width: 36px; height: 36px; background: var(--brown); border: var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 0.9rem;">
                     {{ substr(Auth::user()->name, 0, 2) }}
                 </div>
                 <span style="font-weight: 600; font-size: 0.9rem; display: none; sm:display: inline;">
                     {{ Auth::user()->name }}
-                </span>
+                </span> --}}
             </div>
         </div>
     </div>
@@ -30,6 +30,6 @@
 <!-- Mobile Sidebar -->
 <div class="collapse d-md-none" id="mobileSidebar">
     <div style="background: var(--black); padding: 16px; border-bottom: var(--border);">
-        @include('dashboard.partials.sidebar')
+        @include('dashboard.sidebar')
     </div>
 </div>

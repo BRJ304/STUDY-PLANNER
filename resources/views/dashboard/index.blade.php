@@ -6,18 +6,18 @@
         <div class="row no-gap g-0">
             <!-- Sidebar -->
             <div class="col-md-3 col-lg-2 dashboard-sidebar">
-                @include('dashboard.partials.sidebar')
+                @include('dashboard.sidebar')
             </div>
             
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 dashboard-main">
-                @include('dashboard.partials.header')
+                @include('dashboard.header')
                 
                 <div class="dashboard-content p-4 p-md-5">
                     <!-- Welcome Section -->
                     <div class="welcome-section mb-4">
                         <h1 class="fw-800" style="font-size: 2rem; letter-spacing: -0.5px;">
-                            Welcome back, {{ Auth::user()->name }}! 👋
+                            {{-- Welcome back, {{ Auth::user()->name }}! 👋 --}}
                         </h1>
                         <p style="color: #555; font-size: 1.05rem;">Here's your study overview for today.</p>
                     </div>
@@ -88,7 +88,7 @@
                             <div style="background: white; border: var(--border); box-shadow: var(--shadow); padding: 24px;">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                                     <h4 style="font-weight: 800; margin: 0;">📅 Today's Schedule</h4>
-                                    <a href="{{ route('dashboard.calendar') }}" style="color: var(--brown); font-weight: 700; text-decoration: none; font-size: 0.85rem;">
+                                    <a href="#" style="color: var(--brown); font-weight: 700; text-decoration: none; font-size: 0.85rem;">
                                         View All →
                                     </a>
                                 </div>
@@ -162,7 +162,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a href="{{ route('dashboard.progress') }}" class="btn btn-brutal btn-brutal-secondary w-100 mt-3" style="font-size: 0.85rem; padding: 10px;">
+                                <a href="#" class="btn btn-brutal btn-brutal-secondary w-100 mt-3" style="font-size: 0.85rem; padding: 10px;">
                                     View Detailed Analytics
                                 </a>
                             </div>
@@ -172,7 +172,7 @@
                     <!-- Quick Actions -->
                     <div class="row g-4 mt-4">
                         <div class="col-md-4">
-                            <a href="{{ route('dashboard.study-plan') }}" style="text-decoration: none; color: inherit;">
+                            <a href="#" style="text-decoration: none; color: inherit;">
                                 <div style="background: var(--blue); border: var(--border); box-shadow: var(--shadow); padding: 24px; text-align: center; transition: transform 0.1s, box-shadow 0.1s;">
                                     <span style="font-size: 2.5rem; display: block;">📝</span>
                                     <h5 style="font-weight: 800; margin: 8px 0; color: white;">Study Plan</h5>
@@ -181,7 +181,7 @@
                             </a>
                         </div>
                         <div class="col-md-4">
-                            <a href="{{ route('dashboard.materials') }}" style="text-decoration: none; color: inherit;">
+                            <a href="#" style="text-decoration: none; color: inherit;">
                                 <div style="background: var(--green); border: var(--border); box-shadow: var(--shadow); padding: 24px; text-align: center; transition: transform 0.1s, box-shadow 0.1s;">
                                     <span style="font-size: 2.5rem; display: block;">📂</span>
                                     <h5 style="font-weight: 800; margin: 8px 0; color: var(--black);">Materials</h5>
@@ -190,7 +190,7 @@
                             </a>
                         </div>
                         <div class="col-md-4">
-                            <a href="{{ route('dashboard.calendar') }}" style="text-decoration: none; color: inherit;">
+                            <a href="#" style="text-decoration: none; color: inherit;">
                                 <div style="background: var(--pink); border: var(--border); box-shadow: var(--shadow); padding: 24px; text-align: center; transition: transform 0.1s, box-shadow 0.1s;">
                                     <span style="font-size: 2.5rem; display: block;">📊</span>
                                     <h5 style="font-weight: 800; margin: 8px 0; color: white;">Analytics</h5>

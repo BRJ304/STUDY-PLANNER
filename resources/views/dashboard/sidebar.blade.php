@@ -22,7 +22,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('dashboard.study-plan') ? 'active' : '' }}" 
-               href="{{ route('dashboard.study-plan') }}"
+               href="/study-plan"
                style="color: {{ request()->routeIs('dashboard.study-plan') ? 'var(--brown)' : '#aaa' }}; 
                       background: {{ request()->routeIs('dashboard.study-plan') ? '#222' : 'transparent' }};
                       border: var(--border); 
@@ -35,7 +35,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('dashboard.progress') ? 'active' : '' }}" 
-               href="{{ route('dashboard.progress') }}"
+               href="/progress"
                style="color: {{ request()->routeIs('dashboard.progress') ? 'var(--brown)' : '#aaa' }}; 
                       background: {{ request()->routeIs('dashboard.progress') ? '#222' : 'transparent' }};
                       border: var(--border); 
@@ -46,22 +46,10 @@
                 <i class="bi bi-graph-up"></i> Progress
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('dashboard.calendar') ? 'active' : '' }}" 
-               href="{{ route('dashboard.calendar') }}"
-               style="color: {{ request()->routeIs('dashboard.calendar') ? 'var(--brown)' : '#aaa' }}; 
-                      background: {{ request()->routeIs('dashboard.calendar') ? '#222' : 'transparent' }};
-                      border: var(--border); 
-                      padding: 12px 16px; 
-                      font-weight: 700; 
-                      font-size: 0.85rem;
-                      transition: all 0.1s;">
-                <i class="bi bi-calendar3"></i> Calendar
-            </a>
-        </li>
+       
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('dashboard.materials') ? 'active' : '' }}" 
-               href="{{ route('dashboard.materials') }}"
+               href="/materials"
                style="color: {{ request()->routeIs('dashboard.materials') ? 'var(--brown)' : '#aaa' }}; 
                       background: {{ request()->routeIs('dashboard.materials') ? '#222' : 'transparent' }};
                       border: var(--border); 
@@ -74,7 +62,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('dashboard.profile') ? 'active' : '' }}" 
-               href="{{ route('dashboard.profile') }}"
+               href="/profile"
                style="color: {{ request()->routeIs('dashboard.profile') ? 'var(--brown)' : '#aaa' }}; 
                       background: {{ request()->routeIs('dashboard.profile') ? '#222' : 'transparent' }};
                       border: var(--border); 
@@ -87,7 +75,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('dashboard.settings') ? 'active' : '' }}" 
-               href="{{ route('dashboard.settings') }}"
+               href="/settings"
                style="color: {{ request()->routeIs('dashboard.settings') ? 'var(--brown)' : '#aaa' }}; 
                       background: {{ request()->routeIs('dashboard.settings') ? '#222' : 'transparent' }};
                       border: var(--border); 
@@ -101,7 +89,7 @@
     </ul>
 
     <div class="sidebar-footer mt-4" style="border-top: 2px solid #222; padding-top: 16px;">
-        <form method="POST" action="{{ route('logout') }}">
+        <form method="POST">
             @csrf
             <button type="submit" style="background: none; border: var(--border); padding: 10px 16px; width: 100%; color: #aaa; font-weight: 700; font-size: 0.85rem; text-align: left; transition: all 0.1s;">
                 <i class="bi bi-box-arrow-right"></i> Logout

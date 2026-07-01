@@ -18,14 +18,5 @@ class HomeController extends Controller
   public function feature(){
     return  view('features');
   }
-
-  public function logins(){
-    return  view('login');
-  }
-  public function register(){
-    return  view('registration');
-  }
-  public function dashboards(){
-    return  view('dashboard');
-  }
+  
 }
