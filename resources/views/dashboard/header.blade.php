@@ -1,4 +1,4 @@
-<div class="dashboard-header p-3 p-md-4" style="background: white; border-bottom: var(--border);">
+<div class="dashboard-header p-3 p-md-4" style="background: #f5f0e8; border-bottom: var(--border);">
     <div class="d-flex flex-wrap justify-content-between align-items-center">
         <div class="d-flex align-items-center gap-3">
             <button class="btn btn-brutal btn-brutal-outline d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileSidebar">

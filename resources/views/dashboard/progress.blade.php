@@ -16,9 +16,27 @@
                             <h2 class="fw-800 mb-0">📊 Progress Analytics</h2>
                             <p style="color: #666; margin-top: 4px;">Track your study performance and metrics</p>
                         </div>
-                        <button class="btn btn-brutal btn-brutal-primary" data-bs-toggle="modal" data-bs-target="#logProgressModal" style="font-size: 0.85rem; padding: 8px 20px;">
-                            📝 Log Daily Progress
-                        </button>
+                        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 12px;">
+                            <!-- Session Timer Display -->
+                            <div id="sessionTimerBox" style="display: none; align-items: center; gap: 8px; background: white; border: var(--border); box-shadow: var(--shadow); padding: 8px 16px;">
+                                <span style="width: 10px; height: 10px; background: var(--green); border: 2px solid var(--black); border-radius: 50%; display: inline-block; animation: pulse-dot 1s infinite;"></span>
+                                <span id="sessionTimer" style="font-weight: 800; font-variant-numeric: tabular-nums;">00:00:00</span>
+                            </div>
+
+                            <!-- Start Session Button -->
+                            <button id="startSessionBtn" class="btn btn-brutal btn-brutal-primary" onclick="startSession()" style="font-size: 0.85rem; padding: 8px 20px;">
+                                ▶️ Start Session
+                            </button>
+
+                            <!-- End Session Button (hidden until a session starts) -->
+                            <button id="endSessionBtn" class="btn btn-brutal btn-brutal-outline" onclick="endSession()" style="display: none; font-size: 0.85rem; padding: 8px 20px;">
+                                ⏹️ End Session
+                            </button>
+
+                            <button class="btn btn-brutal btn-brutal-primary" data-bs-toggle="modal" data-bs-target="#logProgressModal" style="font-size: 0.85rem; padding: 8px 20px;">
+                                📝 Log Daily Progress
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Success/Error Messages -->
@@ -168,4 +186,72 @@
         </div>
     </div>
 </div>
+
+<!-- ========== SESSION TIMER STYLES & SCRIPT ========== -->
+<style>
+    @keyframes pulse-dot {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+    }
+</style>
+
+<script>
+    const SESSION_KEY = 'study_session_start';
+    let timerInterval = null;
+
+    // Restore a running session after page reload
+    document.addEventListener('DOMContentLoaded', function () {
+        if (localStorage.getItem(SESSION_KEY)) {
+            showRunningState();
+        }
+    });
+
+    function startSession() {
+        localStorage.setItem(SESSION_KEY, Date.now().toString());
+        showRunningState();
+    }
+
+    function endSession() {
+        const start = parseInt(localStorage.getItem(SESSION_KEY), 10);
+        if (!start) return;
+
+        const elapsedMs = Date.now() - start;
+        const hours = Math.max(0.1, Math.round((elapsedMs / 3600000) * 10) / 10); // round to 0.1h, min 0.1
+
+        // Clear session state
+        localStorage.removeItem(SESSION_KEY);
+        clearInterval(timerInterval);
+        showIdleState();
+
+        // Prefill hours in the existing Log Progress modal and open it
+        document.getElementById('hours_studied').value = hours;
+        const modal = new bootstrap.Modal(document.getElementById('logProgressModal'));
+        modal.show();
+    }
+
+    function showRunningState() {
+        document.getElementById('startSessionBtn').style.display = 'none';
+        document.getElementById('endSessionBtn').style.display = 'inline-block';
+        document.getElementById('sessionTimerBox').style.display = 'flex';
+        updateTimer();
+        timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    function showIdleState() {
+        document.getElementById('startSessionBtn').style.display = 'inline-block';
+        document.getElementById('endSessionBtn').style.display = 'none';
+        document.getElementById('sessionTimerBox').style.display = 'none';
+    }
+
+    function updateTimer() {
+        const start = parseInt(localStorage.getItem(SESSION_KEY), 10);
+        if (!start) return;
+
+        const totalSec = Math.floor((Date.now() - start) / 1000);
+        const h = String(Math.floor(totalSec / 3600)).padStart(2, '0');
+        const m = String(Math.floor((totalSec % 3600) / 60)).padStart(2, '0');
+        const s = String(totalSec % 60).padStart(2, '0');
+        document.getElementById('sessionTimer').textContent = `${h}:${m}:${s}`;
+    }
+</script>
 @endsection
