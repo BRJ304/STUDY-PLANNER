@@ -16,7 +16,7 @@ class StudyPlan extends Model
      *
      * @var array<int, string>
      */
-   protected $table = 'study-plan';
+   protected $table = 'study_plans';
     protected $fillable = [
         'user_id',
         'title',

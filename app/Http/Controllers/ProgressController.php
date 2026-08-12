@@ -100,6 +100,52 @@ class ProgressController extends Controller
     }
     
     /**
+     * Start a study session for the authenticated user.
+     */
+    public function startSession()
+    {
+        \App\Models\StudySession::create([
+            'user_id' => Auth::id(),
+            'status' => 'in_progress',
+            'start_time' => now(),
+        ]);
+
+        return redirect()->route('progress')->with('success', 'Study session started!');
+    }
+
+    /**
+     * Stop the active study session and log the studied time into today's progress.
+     */
+    public function stopSession()
+    {
+        $session = \App\Models\StudySession::where('user_id', Auth::id())
+            ->where('status', 'in_progress')
+            ->latest('start_time')
+            ->first();
+
+        if ($session) {
+            $end = now();
+            $duration = $session->start_time
+                ? (int) $session->start_time->diffInMinutes($end)
+                : 0;
+
+            $session->update([
+                'end_time' => $end,
+                'duration' => $duration,
+                'status' => 'completed',
+            ]);
+
+            // Roll the session's minutes into today's progress record.
+            \App\Models\Progress::updateOrCreate(
+                ['user_id' => Auth::id(), 'date' => $end->toDateString()],
+                ['hours_studied' => round($duration / 60, 2)]
+            );
+        }
+
+        return redirect()->route('progress')->with('success', 'Study session completed!');
+    }
+
+    /**
      * Export progress data
      */
     public function export()

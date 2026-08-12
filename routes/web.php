@@ -51,6 +51,8 @@ Route::middleware(['auth'])->group(function () {
     // Progress
     Route::get('/progress', [ProgressController::class, 'index'])->name('progress');
     Route::post('/progress', [ProgressController::class, 'store'])->name('progress.store');
+    Route::post('/progress/start-session', [ProgressController::class, 'startSession'])->name('progress.start-session');
+    Route::post('/progress/stop-session', [ProgressController::class, 'stopSession'])->name('progress.stop-session');
     Route::get('/progress/export', [ProgressController::class, 'export'])->name('progress.export');
     // Materials
     Route::get('/materials', [MaterialsController::class, 'index'])->name('materials');

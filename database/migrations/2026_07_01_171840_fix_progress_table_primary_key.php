@@ -12,17 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // 1. Remove AUTO_INCREMENT from user_id first so we can modify primary key
-        DB::statement('ALTER TABLE progress MODIFY user_id BIGINT UNSIGNED NOT NULL');
-        
-        // 2. Drop the existing primary key (which was on user_id)
-        DB::statement('ALTER TABLE progress DROP PRIMARY KEY');
-        
-        // 3. Make id the autoincrement primary key
-        DB::statement('ALTER TABLE progress MODIFY id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY');
-        
-        // 4. Add unique key for user_id and date
-        DB::statement('ALTER TABLE progress ADD UNIQUE KEY progress_user_id_date_unique (user_id, date)');
+        // No-op: the create_progress_table migration now builds the table with the
+        // correct primary key (auto-increment `id`) and unique(user_id, date). This
+        // migration originally used MySQL-only raw DDL to retrofit a hand-created
+        // table and is kept as a no-op so existing migration history stays intact.
     }
 
     /**
@@ -30,9 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::statement('ALTER TABLE progress DROP INDEX progress_user_id_date_unique');
-        DB::statement('ALTER TABLE progress MODIFY id BIGINT UNSIGNED NOT NULL');
-        DB::statement('ALTER TABLE progress DROP PRIMARY KEY');
-        DB::statement('ALTER TABLE progress MODIFY user_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY');
+        // No-op. See up().
     }
 };
