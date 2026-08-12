@@ -89,6 +89,25 @@
         .navbar-brutal .btn-search:hover { background: var(--btn-hover); color: var(--btn-ink); transform: translate(-2px, -2px); }
         .navbar-brutal .btn-search:active { transform: translate(1px, 1px); }
 
+        /* ── Dashboard-only nav alignment ──
+           On dashboard pages (.nav-dashboard, added via route only), the logo
+           occupies a left zone the width of the sidebar column so the nav
+           buttons begin exactly at the sidebar divider (the "T" stem). Applies
+           at md+ only, where the navbar is expanded and the sidebar exists. */
+        @media (min-width: 768px) {
+            .navbar-brutal.nav-dashboard { padding-left: 0 !important; }
+            .navbar-brutal.nav-dashboard .navbar-brand {
+                flex: 0 0 25vw; max-width: 25vw;   /* matches col-md-3 sidebar */
+                padding-left: 1.5rem;              /* align logo with sidebar heading (p-md-4) */
+                margin-right: 0;
+            }
+        }
+        @media (min-width: 992px) {
+            .navbar-brutal.nav-dashboard .navbar-brand {
+                flex: 0 0 16.6667vw; max-width: 16.6667vw;   /* matches col-lg-2 sidebar */
+            }
+        }
+
         /* ── Buttons ── */
         .btn-brutal {
             font-family: inherit; font-weight: 800; font-size: 0.95rem;
@@ -415,7 +434,7 @@
 
 <body>
     <!-- NAVBAR (Bootstrap 5) -->
-    <nav class="navbar navbar-expand-md navbar-brutal px-3 px-md-5 py-0">
+    <nav class="navbar navbar-expand-md navbar-brutal px-3 px-md-5 py-0 {{ request()->routeIs('dashboard', 'profile', 'study-plan*', 'progress*', 'materials*', 'settings*') ? 'nav-dashboard' : '' }}">
         <div class="container-fluid px-0">
             <a class="navbar-brand fw-800 fs-5" href="#">StudyMind AI</a>
             <button class="navbar-toggler border-0 rounded-0" type="button" data-bs-toggle="collapse"
