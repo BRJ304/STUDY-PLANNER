@@ -64,8 +64,8 @@ class SettingsController extends Controller
     {
         $user = Auth::user();
         
-        $user->profile_visibility = $request->profile_visibility;
-        $user->study_data_sharing = $request->study_data_sharing;
+        $user->profile_visibility = $request->input('profile_visibility', $user->profile_visibility);
+        $user->study_data_sharing = $request->input('study_data_sharing', $user->study_data_sharing);
         $user->show_progress = $request->has('show_progress');
         $user->show_online_status = $request->has('show_online_status');
         $user->save();
@@ -80,10 +80,10 @@ class SettingsController extends Controller
     {
         $user = Auth::user();
         
-        $user->language = $request->language;
-        $user->theme = $request->theme;
-        $user->font_size = $request->font_size;
-        $user->timezone = $request->timezone;
+        $user->language = $request->input('language', $user->language);
+        $user->theme = $request->input('theme', $user->theme);
+        $user->font_size = $request->input('font_size', $user->font_size);
+        $user->timezone = $request->input('timezone', $user->timezone);
         $user->save();
 
         return back()->with('success', 'Preferences updated!');
@@ -96,10 +96,10 @@ class SettingsController extends Controller
     {
         $user = Auth::user();
         
-        $user->study_preference = $request->study_preference;
-        $user->learning_style = $request->learning_style;
-        $user->goal = $request->goal;
-        $user->weekly_goal_hours = $request->weekly_goal_hours;
+        $user->study_preference = $request->input('study_preference', $user->study_preference);
+        $user->learning_style = $request->input('learning_style', $user->learning_style);
+        $user->goal = $request->input('goal', $user->goal);
+        $user->weekly_goal_hours = $request->input('weekly_goal_hours', $user->weekly_goal_hours);
         $user->save();
 
         return back()->with('success', 'Study preferences updated!');
