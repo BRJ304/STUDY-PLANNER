@@ -30,6 +30,10 @@
             --shadow: 4px 4px 0px var(--black);
             --shadow-lg: 6px 6px 0px var(--black);
             --border: 2.5px solid var(--black);
+            /* Unified primary-button color (see .btn-brutal-primary / .btn-search) */
+            --btn: #FF4FA3;
+            --btn-hover: #F0369A;
+            --btn-ink: #2A1C0E;
         }
 
         /* ── brutalist helpers ── */
@@ -77,11 +81,13 @@
             border-radius: 0; background: white; font-family: inherit; width: 200px;
         }
         .navbar-brutal .btn-search {
-            background: var(--black); color: var(--brown); border: var(--border);
+            background: var(--btn); color: var(--btn-ink); border: var(--border);
             font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;
             padding: 8px 16px; border-radius: 0; font-family: inherit;
+            transition: transform 0.1s, background 0.1s;
         }
-        .navbar-brutal .btn-search:hover { background: #222; color: var(--brown); }
+        .navbar-brutal .btn-search:hover { background: var(--btn-hover); color: var(--btn-ink); transform: translate(-2px, -2px); }
+        .navbar-brutal .btn-search:active { transform: translate(1px, 1px); }
 
         /* ── Buttons ── */
         .btn-brutal {
@@ -92,7 +98,10 @@
             transition: transform 0.1s, box-shadow 0.1s;
         }
         .btn-brutal:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-lg); }
-        .btn-brutal-primary { background: var(--black); color: var(--brown); }
+        /* Brutalist press: click pushes the button down into its hard shadow */
+        .btn-brutal:active { transform: translate(4px, 4px); box-shadow: none; }
+        .btn-brutal-primary { background: var(--btn); color: var(--btn-ink); }
+        .btn-brutal-primary:hover { background: var(--btn-hover); color: var(--btn-ink); }
         .btn-brutal-secondary { background: var(--brown); color: var(--black); }
         .btn-brutal-outline { background: white; color: var(--black); }
 
