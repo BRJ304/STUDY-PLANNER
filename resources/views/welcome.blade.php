@@ -15,9 +15,35 @@
                 <a href="#how" class="btn btn-brutal btn-brutal-secondary">How It Works</a>
             </div>
         </div>
-        <div class="col-md-6 hero-right" >
-            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=900&q=80" 
-                 class="w-100 h-100" style="object-fit: cover; min-height: 300px;" alt="Student">
+        <div class="col-md-6 hero-right">
+            <div class="mock-panel">
+                <div class="mock-card">
+                    <div class="mock-head">
+                        <span class="mock-title">Today's Plan</span>
+                        <span class="mock-chip">3 / 4 Done</span>
+                    </div>
+                    <div class="mock-row">
+                        <span class="mock-check">✓</span>
+                        <span>Mathematics — Calculus</span>
+                        <span class="mock-meta">45m</span>
+                    </div>
+                    <div class="mock-row">
+                        <span class="mock-check">✓</span>
+                        <span>Physics — Optics</span>
+                        <span class="mock-meta">30m</span>
+                    </div>
+                    <div class="mock-row">
+                        <span class="mock-check">✓</span>
+                        <span>Chemistry — Organic</span>
+                        <span class="mock-meta">25m</span>
+                    </div>
+                    <div class="mock-row">
+                        <span class="mock-check off">○</span>
+                        <span>English — Essay Review</span>
+                        <span class="mock-meta">40m</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -50,9 +76,35 @@
 
 <section class="container-fluid px-0">
     <div class="row g-0 border-bottom">
-        <div class="col-md-6 showcase-img">
-            <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800&q=80" 
-                 class="w-100 h-100" style="object-fit: cover; min-height: 300px;">
+        <div class="col-md-6 bg-brutal-brown">
+            <div class="mock-panel">
+                <div class="mock-card">
+                    <div class="mock-head">
+                        <span class="mock-title">Weekly Progress</span>
+                        <span class="mock-chip">On Track</span>
+                    </div>
+                    <div class="mock-row">
+                        <span class="mock-face">MA</span>
+                        <div class="mock-bar"><span style="width:82%"></span></div>
+                        <span class="mock-meta">82%</span>
+                    </div>
+                    <div class="mock-row">
+                        <span class="mock-face">PH</span>
+                        <div class="mock-bar"><span style="width:68%"></span></div>
+                        <span class="mock-meta">68%</span>
+                    </div>
+                    <div class="mock-row">
+                        <span class="mock-face">CH</span>
+                        <div class="mock-bar"><span style="width:55%"></span></div>
+                        <span class="mock-meta">55%</span>
+                    </div>
+                    <div class="mock-row">
+                        <span class="mock-face">EN</span>
+                        <div class="mock-bar"><span style="width:90%"></span></div>
+                        <span class="mock-meta">90%</span>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-6 p-4 p-md-5 d-flex flex-column justify-content-center">
             <h2 class="mb-3">Your Plan Adapts.<br>Every Single Day.</h2>
