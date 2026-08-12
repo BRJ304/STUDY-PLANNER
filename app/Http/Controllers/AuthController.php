@@ -24,7 +24,10 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+            // Prevent session fixation by issuing a fresh session ID after login.
+            $request->session()->regenerate();
+
             return redirect('/dashboard')->with('success', 'Login Successful');
         }
 
@@ -36,7 +39,7 @@ class AuthController extends Controller
         $request->validate([
              'name' => 'required',
              'email' => 'required|email|unique:users',
-             'password' => 'required|min:6|confirmed',
+             'password' => 'required|min:8|confirmed',
          ]);
 
          User::create([
@@ -47,9 +50,12 @@ class AuthController extends Controller
 
          return redirect('/login')->with('success', 'Registration Successful');
     }
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return redirect('/login')->with('success', 'Logged Out Successfully');
     }

@@ -434,7 +434,7 @@
                     <span class="me-2" style="font-weight: 600; font-size: 0.85rem; color: var(--black);">
                         <i class="bi bi-person-circle"></i> {{ Auth::user()->name }}
                     </span>
-                    <form method="get" action="{{ route('logout') }}" class="d-inline">
+                    <form method="POST" action="{{ route('logout') }}" class="d-inline">
                         @csrf
                         <button type="submit" class="btn btn-brutal btn-brutal-outline" style="padding: 6px 16px; font-size: 0.8rem;">
                             Logout

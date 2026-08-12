@@ -55,7 +55,8 @@
         </div>
         @endauth
 
-        <form method="GET" action="{{ route('logout') }}">
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
             <button type="submit" class="sb-logout">
                 <i class="bi bi-box-arrow-right"></i> Logout
             </button>

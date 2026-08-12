@@ -27,7 +27,8 @@ class MaterialsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'material_file' => 'required|file|max:10240', // 10MB max
+            // Whitelist safe document/image types; block executable/script uploads.
+            'material_file' => 'required|file|max:10240|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,txt,csv,png,jpg,jpeg', // 10MB max
             'material_title' => 'required|string|max:255',
             'material_description' => 'nullable|string|max:500',
             'material_subject' => 'required|string',
@@ -35,11 +36,13 @@ class MaterialsController extends Controller
             'material_tags' => 'nullable|string',
             'is_important' => 'nullable|boolean',
         ]);
-        
+
         if ($request->hasFile('material_file')) {
             $file = $request->file('material_file');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('materials/' . Auth::id(), $filename, 'public');
+            // Store on the private "local" disk with a random hashed name (never the
+            // client-supplied filename). Files are only served via the authorized
+            // download() route below, not directly over the web.
+            $path = $file->store('materials/' . Auth::id(), 'local');
             
             // Store in database
             \App\Models\Material::create([
@@ -65,8 +68,8 @@ class MaterialsController extends Controller
         $material = \App\Models\Material::where('user_id', Auth::id())->findOrFail($id);
         
         // Delete file from disk
-        if (Storage::disk('public')->exists($material->file_path)) {
-            Storage::disk('public')->delete($material->file_path);
+        if (Storage::disk('local')->exists($material->file_path)) {
+            Storage::disk('local')->delete($material->file_path);
         }
         
         $material->delete();
@@ -81,8 +84,8 @@ class MaterialsController extends Controller
     {
         $material = \App\Models\Material::where('user_id', Auth::id())->findOrFail($id);
         
-        if (Storage::disk('public')->exists($material->file_path)) {
-            return Storage::disk('public')->download(
+        if (Storage::disk('local')->exists($material->file_path)) {
+            return Storage::disk('local')->download(
                 $material->file_path, 
                 $material->title . '.' . pathinfo($material->file_path, PATHINFO_EXTENSION)
             );

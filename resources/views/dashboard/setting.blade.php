@@ -372,7 +372,7 @@
                                         <span style="background: #eee; padding: 2px 12px; border: var(--border); font-size: 0.7rem; font-weight: 700;">Expired</span>
                                     </div>
                                 </div>
-                                <form method="get" action="{{ route('logout') }}">
+                                <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="btn btn-brutal btn-brutal-outline w-100">
                                         Logout from All Devices
