@@ -62,7 +62,7 @@
                                 Remember me
                             </label>
                         </div>
-                        <a href="#" style="color: var(--brown); font-weight: 700; font-size: 0.85rem; text-decoration: none;">
+                        <a href="{{ route('password.request') }}" style="color: var(--brown); font-weight: 700; font-size: 0.85rem; text-decoration: none;">
                             Forgot password?
                         </a>
                     </div>

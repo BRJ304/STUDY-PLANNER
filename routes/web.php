@@ -30,6 +30,16 @@ Route::post('/register', [AuthController::class, 'registerPost'])
     ->middleware('throttle:6,1')
     ->name('register.post');
 
+// Password reset
+Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
+Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])
+    ->middleware('throttle:6,1')
+    ->name('password.email');
+Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])
+    ->middleware('throttle:6,1')
+    ->name('password.update');
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // adminroute
