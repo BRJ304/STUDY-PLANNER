@@ -31,9 +31,9 @@
             --shadow-lg: 6px 6px 0px var(--black);
             --border: 2.5px solid var(--black);
             /* Unified primary-button color (see .btn-brutal-primary / .btn-search) */
-            --btn: #FF4FA3;
-            --btn-hover: #F0369A;
-            --btn-ink: #2A1C0E;
+            --btn: #A3C4E0;
+            --btn-hover: #8FB2D6;
+            --btn-ink: #21303F;
         }
 
         /* ── brutalist helpers ── */
